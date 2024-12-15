@@ -1,0 +1,9 @@
+body .Nav {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+
+  &-Btn {
+    color: var(--blue);
+  }
+}
