@@ -2,8 +2,13 @@ body .Nav {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+
+  &-LogoLink {
+    color: var(--white);
+  }
 
   &-Btn {
-    color: var(--blue);
+    color: var(--white);
   }
 }

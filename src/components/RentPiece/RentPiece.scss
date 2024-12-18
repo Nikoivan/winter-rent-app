@@ -1,0 +1,7 @@
+body .RentPieceItem {
+  &-Text {
+    &_payed {
+      text-decoration: line-through;
+    }
+  }
+}

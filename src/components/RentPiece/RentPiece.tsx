@@ -1,27 +1,32 @@
 import { FC, memo, useCallback } from 'react';
+import { cn } from '@bem-react/classname';
 import { Badge, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { Checkbox } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-import { auditActions, RentPiece } from '../../lib/redux/slices/auditSlice/auditSlice.ts';
+import { auditActions } from '../../lib/redux/slices/auditSlice/auditSlice.ts';
 import { useAppDispatch } from '../../lib/redux/store.ts';
+import { RentPieceType } from '../../lib/redux/slices/auditSlice/auditSlice.types.ts';
 
-type RentPieceItemFCProps = RentPiece & {
+import './RentPiece.scss';
+
+type RentPieceItemFCProps = RentPieceType & {
   itemId: string;
-}
+};
 
-const RentPieceItemFC: FC<RentPieceItemFCProps> = ({ itemId, id, title, price, returned, count }) => {
+const cnRentPieceItem = cn('RentPieceItem');
+
+const RentPieceItemFC: FC<RentPieceItemFCProps> = ({ itemId, id, title, price, returned, payed, count }) => {
   const dispatch = useAppDispatch();
 
   const handleDeletePiece = useCallback(() => {
     dispatch(auditActions.removeRentPiece({ itemId, pieceId: id }));
   }, [dispatch, id, itemId]);
 
-  const handleReturnPiece = useCallback(() =>
-    dispatch(auditActions.checkReturnRentPiece({ itemId, pieceId: id })), []);
+  const handleReturnPiece = useCallback(() => dispatch(auditActions.checkReturnRentPiece({ itemId, pieceId: id })), []);
 
   return (
-      <ListItem sx={{ padding: '8px 0' }}>
+      <ListItem className={cnRentPieceItem()} sx={{ padding: '8px 0' }}>
           <IconButton onClick={handleDeletePiece} sx={{ padding: '8px 8px 8px 0' }}>
               <HighlightOffIcon color='error' />
           </IconButton>
@@ -34,8 +39,11 @@ const RentPieceItemFC: FC<RentPieceItemFCProps> = ({ itemId, id, title, price, r
               </ListItemIcon>
           </ListItemButton>
           <ListItemText
-              sx={{ minWidth: '70px' }} slotProps={{ primary: { align: 'right' } }}
-              primary={`${price * count} ₽`} />
+              className={cnRentPieceItem('Text', { payed })}
+              sx={{ minWidth: '70px' }}
+              slotProps={{ primary: { align: 'right' } }}
+              primary={`${price * count} ₽`}
+      />
       </ListItem>
   );
 };

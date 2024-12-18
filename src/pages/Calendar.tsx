@@ -1,9 +1,9 @@
-import {FC} from "react";
+import { FC } from 'react';
 
 const CalendarPage: FC = () => (
-		<div>
-				Calendar CRM
-		</div>
+    <div>
+        Calendar CRM
+    </div>
 );
 
 export default CalendarPage;
