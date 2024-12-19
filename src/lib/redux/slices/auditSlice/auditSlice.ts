@@ -1,27 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import {
-  AuditSlice,
-  AuditTabs,
-  RentItem,
   RentItemAction,
   RentItemAddAction,
   RentPieceAction,
   RentPieceAddAction,
   SelectTabAction
 } from './auditSlice.types.ts';
-import { createRentPieces } from './auditSlice.utils.ts';
-
-const testItems: RentItem[] = [];
-
-const initialState: AuditSlice = {
-  activeTab: AuditTabs.ACTIVE,
-  rentItems: [...testItems]
-};
+import { createRentPieces, getInitialState } from './auditSlice.utils.ts';
 
 export const auditSlice = createSlice({
   name: 'audit',
-  initialState,
+  initialState: getInitialState(),
   reducers: {
     selectTab: (state, action: SelectTabAction) => {
       state.activeTab = action.payload.tab;

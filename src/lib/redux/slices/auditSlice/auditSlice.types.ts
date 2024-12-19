@@ -71,3 +71,5 @@ export type RentItemAddAction = PayloadAction<{ id: string; contactInfo: Contact
 export type SelectTabAction = PayloadAction<{ tab: AuditTabs }>;
 export type RentPieceAction = PayloadAction<{ itemId: string; pieceId: string }>;
 export type RentPieceAddAction = PayloadAction<{ itemId: string; type: RentTypes }>;
+
+export type AppAction = RentItemAction | RentItemAddAction | SelectTabAction | RentPieceAction | RentPieceAddAction;

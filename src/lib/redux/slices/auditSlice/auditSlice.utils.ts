@@ -1,5 +1,35 @@
 import { v4 } from 'uuid';
-import { RentPieceType, RentTypes } from './auditSlice.types';
+import { AuditSlice, AuditTabs, RentPieceType, RentTypes } from './auditSlice.types';
+import { isRentItemsArray } from '../../../typeguards.ts';
+
+export function getCurrentRentStateName(): string {
+  const date = new Date();
+
+  return `rent_${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+}
+
+export function getInitialState(): AuditSlice {
+  const currentStateName = getCurrentRentStateName();
+  const jsonState = window.localStorage.getItem(currentStateName);
+  const currentRentState: AuditSlice = {
+    activeTab: AuditTabs.ACTIVE,
+    rentItems: []
+  };
+
+  if (jsonState) {
+    try {
+      const rentItems = JSON.parse(jsonState);
+
+      if (isRentItemsArray(rentItems)) {
+        currentRentState.rentItems = rentItems;
+      }
+    } catch {
+      // do nothing
+    }
+  }
+
+  return currentRentState;
+}
 
 function getPieceData(type: RentTypes): { title: string; price: number; type: RentTypes }[] {
   const pieces = [];

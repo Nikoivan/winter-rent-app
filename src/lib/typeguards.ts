@@ -1,4 +1,4 @@
-import { ContactInfo, Drivers, RentTypes } from './redux/slices/auditSlice/auditSlice.types.ts';
+import { ContactInfo, Drivers, RentItem, RentTypes } from './redux/slices/auditSlice/auditSlice.types.ts';
 
 const rentTypesValues = new Set(Object.values(RentTypes));
 const keysOfContactInfo = new Set(['clientName', 'clientPhone', 'driver']);
@@ -24,4 +24,23 @@ export function isContactInfo(value: unknown): value is ContactInfo {
   const values = Object.values(value);
 
   return values.every(Boolean);
+}
+
+export function isRentItem(value: unknown): value is RentItem {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'id' in value &&
+    typeof value.id === 'string' &&
+    'payed' in value &&
+    typeof value.payed === 'boolean' &&
+    'contactInfo' in value &&
+    isContactInfo(value.contactInfo) &&
+    'items' in value &&
+    Array.isArray(value.items)
+  );
+}
+
+export function isRentItemsArray(value: unknown): value is RentItem[] {
+  return !!value && Array.isArray(value) && !!value.length && value.every(isRentItem);
 }

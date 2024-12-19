@@ -24,7 +24,7 @@ const Audit: FC = () => {
 
   const [activeItems, returnedItems] = useMemo(
     () => [
-      rentItems.filter(({ items }) => !items.length || items.every(({ returned }) => !returned)),
+      rentItems.filter(({ items }) => !items.length || items.some(({ returned, payed }) => !returned || !payed)),
       rentItems.filter(({ items }) => !!items.length && items.every(({ returned, payed }) => returned && payed))
     ],
     [rentItems]

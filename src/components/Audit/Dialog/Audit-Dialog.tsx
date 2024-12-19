@@ -75,7 +75,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
           <DialogTitle sx={{ textAlign: 'center' }}>
               Добавить арендатора
           </DialogTitle>
-          <DialogContent sx={{ padding: '1rem', minWidth: '70vw', minHeight: '70vh' }}>
+          <DialogContent sx={{ padding: '1rem', minWidth: '70vw', minHeight: '55vh' }}>
               <TextField
                   onChange={handleChangeInput}
                   sx={{ mt: 3 }}

@@ -3,14 +3,14 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 
 import { auditSlice } from './slices/auditSlice/auditSlice.ts';
+import { localStorageMiddleware } from './middleWares/localStorageMiddleware.tsx';
 
 const sagaMiddleware = createSagaMiddleware();
-
 const rootReducer = combineSlices(auditSlice);
 
 const store = configureStore({
-		reducer: rootReducer,
-		middleware: getDefaultMiddleware => getDefaultMiddleware().concat(sagaMiddleware)
+  reducer: rootReducer,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(localStorageMiddleware, sagaMiddleware)
 });
 
 // sagaMiddleware.run(rootSaga);
