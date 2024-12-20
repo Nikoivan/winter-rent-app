@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
 
-import PricesPage from './pages/Prices.tsx';
-import RentPage from './pages/Rent.tsx';
-import CalendarPage from './pages/Calendar.tsx';
+import PricesPage from './pages/PricesPage.tsx';
+import RentPage from './pages/RentPage.tsx';
+import CalendarPage from './pages/CalendarPage.tsx';
 import App from './App';
-import IndexPage from './pages/Index';
+import IndexPage from './pages/IndexPage.tsx';
 import RentItemPage from './pages/RentItemPage.tsx';
 import Audit from './components/Audit/Audit.tsx';
 

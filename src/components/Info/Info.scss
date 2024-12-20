@@ -1,0 +1,14 @@
+.Info {
+  text-align: center;
+
+  &-Title {
+    margin-top: 3rem;
+    font-size: 1rem;
+    color: var(--blue);
+  }
+
+  &-Paragraph {
+    margin-top: 5rem;
+    text-align: justify;
+  }
+}

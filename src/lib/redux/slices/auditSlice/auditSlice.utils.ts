@@ -55,13 +55,19 @@ function getPieceData(type: RentTypes): { title: string; price: number; type: Re
     }
 
     case RentTypes.PANTS: {
-      pieces.push({ title: 'Штаны', price: 300, type: RentTypes.PANTS });
+      pieces.push({ title: 'Штаны', price: 400, type: RentTypes.PANTS });
+
+      break;
+    }
+
+    case RentTypes.GLOVES: {
+      pieces.push({ title: 'Перчатки', price: 400, type: RentTypes.PANTS });
 
       break;
     }
 
     case RentTypes.JACKET: {
-      pieces.push({ title: 'Куртка', price: 300, type: RentTypes.JACKET });
+      pieces.push({ title: 'Куртка', price: 400, type: RentTypes.JACKET });
 
       break;
     }

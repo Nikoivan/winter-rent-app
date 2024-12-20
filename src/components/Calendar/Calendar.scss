@@ -1,0 +1,60 @@
+body .Calendar {
+  margin-top: 35px;
+  padding: 3px 0 13px;
+
+  &-Header {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  &-MonthTitle {
+    font-size: 30px;
+  }
+
+  &-Row {
+    width: 100%;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 8px;
+  }
+
+  &-OtherMonth {
+    color: var(--dark-gray);
+  }
+
+  &-Cell {
+    text-align: end;
+    font-weight: 400;
+    color: #928f9440;
+    flex-grow: 1;
+
+    &_selected {
+      position: relative;
+      border: 2px solid var(--yellow);
+
+      border-radius: 5px;
+    }
+
+    &_selected::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+
+      opacity: 0.31;
+    }
+
+    &_empty {
+      text-align: center;
+      color: var(--dark-gray);
+    }
+  }
+
+  &-Btn {
+
+    min-width: 38px;
+  }
+}

@@ -128,7 +128,6 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'react/jsx-first-prop-new-line': [2, 'multiline'],
     'react/jsx-handler-names': 0,
     'react/jsx-key': 2,
-    'react/jsx-no-bind': 1,
     'react/jsx-no-duplicate-props': 2,
     'react/jsx-no-literals': 0,
     'react/jsx-no-undef': 2,

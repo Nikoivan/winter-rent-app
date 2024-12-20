@@ -33,6 +33,7 @@ export enum RentTypes {
   TUBING = 'tubing',
   PANTS = 'pants',
   JACKET = 'jacket',
+  GLOVES = 'gloves',
   GLASSES = 'glasses',
   HELMET = 'helmets',
 }
