@@ -24,7 +24,8 @@ body .Calendar {
   }
 
   &-Cell {
-    text-align: end;
+    width: 13%;
+    text-align: center;
     font-weight: 400;
     color: #928f9440;
     flex-grow: 1;
@@ -53,8 +54,12 @@ body .Calendar {
     }
   }
 
-  &-Btn {
+  &-Text {
+    color: var(--blue);
 
-    min-width: 38px;
+    &_other {
+      color: rgba(146, 143, 148, 0.2509803922);
+    }
   }
+
 }

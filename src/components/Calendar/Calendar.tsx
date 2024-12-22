@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
-import getNewArr from './calendar.utils';
+import getNewArr from './lib/calendar.utils.ts';
 import CalendarCell from './Cell/Calendar-Cell.tsx';
 
 import './Calendar.scss';
@@ -45,9 +45,6 @@ const Calendar: FC = () => {
   };
 
   const calendarArr = getNewArr(new Date(currentMonth.setDate(1)));
-  const handleCellClick = () => {
-    console.log('onCellClick');
-  };
 
   return (
       <div className={cnCalendar()}>
@@ -73,7 +70,7 @@ const Calendar: FC = () => {
               {calendarArr.map((el, idx) => (
                   <div className={cnCalendar('Row')} key={idx}>
                       {el.map((item, id) => (
-                          <CalendarCell key={id} selected onCellClick={handleCellClick} {...item} />
+                          <CalendarCell key={id} selected {...item} />
             ))}
                   </div>
         ))}

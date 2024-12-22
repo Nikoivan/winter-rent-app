@@ -16,13 +16,13 @@ const RentItemPage: FC = () => {
 
   useEffect(() => {
     (async () => {
-      if (item) {
+      if (item && !items) {
         setItems(item.items);
       } else {
         await navigate('/winter-rent-crm');
       }
     })();
-  }, [item, navigate]);
+  }, []);
 
   return (
       <>

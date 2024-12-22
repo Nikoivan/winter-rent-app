@@ -1,9 +1,9 @@
 import moment from 'moment';
 
 export type FullDate = {
-  year: string | null;
-  month: string | null;
-  date: string | null;
+  year: string;
+  month: string;
+  date: string;
 };
 
 export type CellType = {
@@ -69,5 +69,11 @@ export default function getNewArr(date: Date): CellType[][] {
     weeks.push(week);
   }
 
-return weeks;
+  return weeks;
+}
+
+export function getPathByFulldate(fullDate: FullDate): string {
+  const { year, month, date } = fullDate;
+
+  return `${date}-${month}-${year}`;
 }

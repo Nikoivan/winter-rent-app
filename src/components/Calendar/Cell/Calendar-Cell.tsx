@@ -1,21 +1,20 @@
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { Button } from '@mui/material';
-import { CellType } from '../calendar.utils.ts';
+import { CellType, getPathByFulldate } from '../lib/calendar.utils.ts';
+import { Link } from 'react-router';
 
 const cnCalendar = cn('Calendar');
 
 type CalendarCellProps = CellType & {
   selected: boolean;
-  onCellClick(): void;
 };
 
-const CalendarCell: FC<CalendarCellProps> = ({ prop, date, selected, onCellClick }) => (
-    <div className={cnCalendar('Cell', { selected })}>
-        <Button className={cnCalendar('Btn')} onClick={onCellClick} color={prop ? 'inherit' : 'primary'}>
+const CalendarCell: FC<CalendarCellProps> = ({ prop, date, selected, fullDate }) => (
+    <Link className={cnCalendar('Cell', { selected })} to={getPathByFulldate(fullDate)}>
+        <span className={cnCalendar('Text', { other: !!prop })}>
             {date}
-        </Button>
-    </div>
+        </span>
+    </Link>
 );
 
 export default CalendarCell;

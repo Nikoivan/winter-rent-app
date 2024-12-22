@@ -44,6 +44,13 @@ export type ContactInfo = {
   driver: Drivers;
 };
 
+export type SimpleRentPiece = {
+  type: RentTypes;
+  count: number;
+  size: string;
+  comment?: string;
+};
+
 export type RentPieceType = {
   id: string;
   title: string;

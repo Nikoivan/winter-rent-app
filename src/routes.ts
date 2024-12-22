@@ -7,6 +7,8 @@ import App from './App';
 import IndexPage from './pages/IndexPage.tsx';
 import RentItemPage from './pages/RentItemPage.tsx';
 import Audit from './components/Audit/Audit.tsx';
+import NotFoundPage from './pages/NotFoundPage.tsx';
+import CalendarItemPage from './pages/CalendarItemPage.tsx';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,16 @@ const router = createBrowserRouter([
       },
       {
         path: 'calendar',
-        Component: CalendarPage
+        children: [
+          { index: true, Component: CalendarPage },
+          {
+            path: ':id',
+            Component: CalendarItemPage
+          }
+        ]
+      },
+      {
+        Component: NotFoundPage
       }
     ]
   }
