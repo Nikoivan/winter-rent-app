@@ -14,7 +14,7 @@ export enum Cities {
 export type RecordType = {
   city: Cities;
   name: string;
-  tel: number;
+  tel: string;
   peopleAmount: number;
   children?: {
     count: string;

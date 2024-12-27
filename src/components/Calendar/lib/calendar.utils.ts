@@ -80,6 +80,12 @@ export function getPathByFulldate(fullDate: FullDate): string {
   return `${date}-${month}-${year}`;
 }
 
+export function validatePhone(phone: string): boolean {
+  const clearPhone: string = (phone.replace('+', '') as string).replaceAll(' ', '');
+
+  return /^[7-9][0-9]{10}/.test(clearPhone);
+}
+
 export function validateForm(value: Record<string, unknown>): ValidationResult {
   const result = {
     name: true,
@@ -91,7 +97,7 @@ export function validateForm(value: Record<string, unknown>): ValidationResult {
   if (!('name' in value) || typeof value.name !== 'string' || value.name === '') {
     result.name = false;
   }
-  if (!('tel' in value) || typeof value.tel !== 'number' || value.tel === 0) {
+  if (!('tel' in value) || typeof value.tel !== 'string' || !validatePhone(value.tel)) {
     result.tel = false;
   }
   if (!('peopleAmount' in value) || typeof value.peopleAmount !== 'number' || value.peopleAmount === 0) {

@@ -17,6 +17,7 @@ import { Cities, RecordType, ValidationResult } from '../lib/calendar.types.ts';
 import { isCities, isRecordType } from '../lib/typeguards.ts';
 import { validateForm } from '../lib/calendar.utils.ts';
 import { v4 } from 'uuid';
+import { MuiTelInput } from 'mui-tel-input';
 
 type CalendarDialogProps = {
   isOpen: boolean;
@@ -25,7 +26,7 @@ type CalendarDialogProps = {
 };
 
 const cnCalendar = cn('Calendar');
-const initialFormFields = { name: '', tel: 0, peopleAmount: 0 };
+const initialFormFields = { name: '', tel: '', peopleAmount: 0 };
 
 const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel }) => {
   const [formFields, setFormFields] = useState<Partial<RecordType>>(initialFormFields);
@@ -40,6 +41,10 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
     const { name, value } = e.currentTarget;
 
     setFormFields(prev => ({ ...prev, [name]: name === 'peopleAmount' || name === 'tel' ? Number(value) : value }));
+  };
+
+  const handleChangePhone = (tel: string) => {
+    setFormFields(prev => ({ ...prev, tel }));
   };
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
@@ -97,14 +102,13 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
                   sx={{ marginTop: '15px' }}
                   fullWidth
         />
-              <TextField
+              <MuiTelInput
                   className={cnCalendar('PeopleAmount')}
-                  type='number'
                   name='tel'
                   value={formFields.tel || ''}
                   error={!validation.tel}
                   label='Телефон'
-                  onChange={handleChangeStringsFields}
+                  onChange={handleChangePhone}
                   onFocus={handleFocus}
                   sx={{ marginTop: '15px' }}
                   fullWidth

@@ -16,7 +16,7 @@ export function isRecordType(value: unknown): value is RecordType {
     value.name !== '' &&
     typeof value.name === 'string' &&
     'tel' in value &&
-    typeof value.tel === 'number' &&
+    typeof value.tel === 'string' &&
     'peopleAmount' in value &&
     value.peopleAmount !== 0 &&
     typeof value.peopleAmount === 'number' &&

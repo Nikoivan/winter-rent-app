@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
 import {
   Button,
@@ -16,6 +16,7 @@ import {
 
 import { ContactInfo, Drivers } from '../../../lib/redux/slices/auditSlice/auditSlice.types.ts';
 import { isContactInfo, isDrivers, isKeyofContactInfo } from '../../../lib/typeguards.ts';
+import { MuiTelInput } from 'mui-tel-input';
 
 type AuditModalProps = {
   open: boolean;
@@ -30,13 +31,14 @@ type FormState = {
 };
 
 const cnAudit = cn('Audit');
+const initFormState: FormState = {
+  clientName: '',
+  clientPhone: '',
+  driver: ''
+};
 
 const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
-  const [form, setForm] = useState<FormState>({
-    clientName: '',
-    clientPhone: '',
-    driver: ''
-  });
+  const [form, setForm] = useState<FormState>(initFormState);
 
   const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
@@ -48,7 +50,11 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     setForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleChangeSelect = useCallback((e: SelectChangeEvent) => {
+  const handleChangePhone = (clientPhone: string) => {
+    setForm(prev => ({ ...prev, clientPhone }));
+  };
+
+  const handleChangeSelect = (e: SelectChangeEvent) => {
     const { value } = e.target;
 
     if (!isDrivers(value)) {
@@ -56,7 +62,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     }
 
     setForm(prev => ({ ...prev, driver: value }));
-  }, []);
+  };
 
   const createBtnDisabled = Object.values(form).some(value => !value);
 
@@ -68,6 +74,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     }
 
     onSubmit(contactInfo);
+    setForm(initFormState);
   };
 
   return (
@@ -85,13 +92,12 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
                   name='clientName'
                   fullWidth
         />
-              <TextField
-                  onChange={handleChangeInput}
+              <MuiTelInput
+                  onChange={handleChangePhone}
                   sx={{ mt: 4 }}
                   value={form.clientPhone}
                   label='Телефон'
                   variant='outlined'
-                  type='number'
                   name='clientPhone'
                   fullWidth
         />

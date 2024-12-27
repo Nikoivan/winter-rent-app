@@ -4,6 +4,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router';
 
 import { RentItem } from '../../../lib/redux/slices/auditSlice/auditSlice.types.ts';
+import TelAnchor from '../../Anchor/TelAnchor.tsx';
 
 const AuditItem: FC<RentItem> = ({ id, contactInfo: { clientPhone, clientName } }) => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const AuditItem: FC<RentItem> = ({ id, contactInfo: { clientPhone, clientName } 
               primary={clientName}
               secondary={
                   <Typography variant='body1' color='info'>
-                      {clientPhone}
+                      <TelAnchor tel={clientPhone} />
                   </Typography>
         }
       />
