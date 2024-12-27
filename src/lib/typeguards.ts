@@ -1,7 +1,7 @@
 import { ContactInfo, Drivers, RentItem, RentTypes } from './redux/slices/auditSlice/auditSlice.types.ts';
 
 const rentTypesValues = new Set(Object.values(RentTypes));
-const keysOfContactInfo = new Set(['clientName', 'clientPhone', 'driver']);
+const keysOfContactInfo = new Set(['clientName', 'clientPhone', 'driver', 'peopleAmount']);
 const driversValues = new Set(Object.values(Drivers));
 
 export function isRentType(value: unknown): value is RentTypes {

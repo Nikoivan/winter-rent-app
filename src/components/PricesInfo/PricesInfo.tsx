@@ -20,7 +20,7 @@ const PricesInfo: FC = () => (
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
+                    <Typography color='info'>
                         {description}
                     </Typography>
                 </AccordionDetails>

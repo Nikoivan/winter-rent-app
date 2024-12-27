@@ -1,4 +1,6 @@
 import moment from 'moment';
+import { isCities, isDay } from './typeguards.ts';
+import { CalendarSliceState, DayType, ValidationResult } from './calendar.types.ts';
 
 export type FullDate = {
   year: string;
@@ -76,4 +78,63 @@ export function getPathByFulldate(fullDate: FullDate): string {
   const { year, month, date } = fullDate;
 
   return `${date}-${month}-${year}`;
+}
+
+export function validateForm(value: Record<string, unknown>): ValidationResult {
+  const result = {
+    name: true,
+    peopleAmount: true,
+    tel: true,
+    city: true
+  };
+
+  if (!('name' in value) || typeof value.name !== 'string' || value.name === '') {
+    result.name = false;
+  }
+  if (!('tel' in value) || typeof value.tel !== 'number' || value.tel === 0) {
+    result.tel = false;
+  }
+  if (!('peopleAmount' in value) || typeof value.peopleAmount !== 'number' || value.peopleAmount === 0) {
+    result.peopleAmount = false;
+  }
+  if (!('city' in value) || !isCities(value.city)) {
+    result.city = false;
+  }
+
+  return result;
+}
+
+export function getCitiesTabs(day?: DayType): string[] {
+  const cities: string[] = [];
+
+  if (day && day.records.length > 0) {
+    for (const record of day.records) {
+      if (!cities.includes(record.city)) {
+        cities.push(record.city);
+      }
+    }
+  }
+
+  return cities;
+}
+
+export function getInitialState(): CalendarSliceState {
+  const jsonState = window.localStorage.getItem('records-calendar');
+  const currentCalendarState: CalendarSliceState = {
+    days: []
+  };
+
+  if (jsonState) {
+    try {
+      const days = JSON.parse(jsonState);
+
+      if (!!days && Array.isArray(days) && days.every(isDay)) {
+        currentCalendarState.days = days;
+      }
+    } catch {
+      // do nothing
+    }
+  }
+
+  return currentCalendarState;
 }

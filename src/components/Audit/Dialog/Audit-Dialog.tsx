@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useMemo, useState } from 'react';
+import { ChangeEvent, FC, useCallback, useState } from 'react';
 import { cn } from '@bem-react/classname';
 import {
   Button,
@@ -38,7 +38,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     driver: ''
   });
 
-  const handleChangeInput = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
 
     if (!isKeyofContactInfo(name)) {
@@ -46,7 +46,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     }
 
     setForm(prev => ({ ...prev, [name]: value }));
-  }, []);
+  };
 
   const handleChangeSelect = useCallback((e: SelectChangeEvent) => {
     const { value } = e.target;
@@ -58,9 +58,9 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     setForm(prev => ({ ...prev, driver: value }));
   }, []);
 
-  const createBtnDisabled = useMemo(() => Object.values(form).some(value => !value), [form]);
+  const createBtnDisabled = Object.values(form).some(value => !value);
 
-  const handleSubmitClick = useCallback(() => {
+  const handleSubmitClick = () => {
     const contactInfo = !createBtnDisabled && { ...form };
 
     if (!isContactInfo(contactInfo)) {
@@ -68,7 +68,7 @@ const AuditDialog: FC<AuditModalProps> = ({ open, onCancel, onSubmit }) => {
     }
 
     onSubmit(contactInfo);
-  }, [createBtnDisabled, form, onSubmit]);
+  };
 
   return (
       <Dialog className={cnAudit('Dialog')} open={open}>

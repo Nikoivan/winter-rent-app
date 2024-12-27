@@ -1,16 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { AddDayAction, CalendarSliceState } from './calendar.types.ts';
-
-const initialState: CalendarSliceState = {
-  days: []
-};
+import { AddRecordAction } from './calendar.types.ts';
+import { v4 } from 'uuid';
+import { getInitialState } from './calendar.utils.ts';
 
 export const calendarSlice = createSlice({
   name: 'calendar',
-  initialState,
+  initialState: getInitialState(),
   reducers: {
-    addRecord: (state, action: AddDayAction) => {
-      state.days.push(action.payload.date);
+    addRecord: (state, action: AddRecordAction) => {
+      const { date, record } = action.payload;
+      const dayByDate = state.days.find(day => date === day.date);
+
+      if (dayByDate) {
+        dayByDate.records.push(record);
+      } else {
+        state.days.push({ id: v4(), date, records: [record] });
+      }
     }
   }
 });
