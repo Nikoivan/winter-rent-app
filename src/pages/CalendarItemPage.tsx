@@ -27,9 +27,10 @@ const CalendarItemPage: FC = () => {
   if (!id) {
     return;
   }
+
   const day = days.find(({ date }) => date === id);
   const tabs = getCitiesTabs(day);
-  const itemsByTab = day?.records.filter(({ city }) => city === activeCity);
+  const itemsByTab = day?.records.filter(({ city }) => city === activeCity || (!!tabs.length && city === tabs[0]));
 
   const handleOpenDialog = () => setOpen(!isOpen);
   const handleChangeTabs = (_e: SyntheticEvent, newValue: string) => {
@@ -75,7 +76,7 @@ const CalendarItemPage: FC = () => {
               ))}
                   </Tabs>
               </Box>
-              {!!itemsByTab?.length && <CalendarList items={itemsByTab} />}
+              {!!itemsByTab?.length && <CalendarList date={id} items={itemsByTab} />}
           </>
       )}
 

@@ -7,15 +7,16 @@ import { RecordType } from '../lib/calendar.types.ts';
 import CalendarItem from '../Item/Calendar-Item.tsx';
 
 type CalendarListProps = {
+  date: string;
   items: RecordType[];
 };
 
 const cnCalendar = cn('Calendar');
 
-const CalendarList: FC<CalendarListProps> = ({ items }) => (
+const CalendarList: FC<CalendarListProps> = ({ date, items }) => (
     <List className={cnCalendar('List')}>
         {items.map(item => (
-            <CalendarItem {...item} key={v4()} />
+            <CalendarItem date={date} {...item} key={v4()} />
     ))}
     </List>
 );

@@ -2,11 +2,13 @@ import { cn } from '@bem-react/classname';
 import { ChangeEvent, FocusEvent, FC, useState } from 'react';
 import {
   Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
   FormControl,
+  FormControlLabel,
   InputLabel,
   MenuItem,
   Select,
@@ -14,13 +16,16 @@ import {
   TextField
 } from '@mui/material';
 import { Cities, RecordType, ValidationResult } from '../lib/calendar.types.ts';
-import { isCities, isRecordType } from '../lib/typeguards.ts';
+import { isCities, isKeyOfRecordType, isRecordType } from '../lib/typeguards.ts';
 import { validateForm } from '../lib/calendar.utils.ts';
 import { v4 } from 'uuid';
 import { MuiTelInput } from 'mui-tel-input';
+import CalendarChildrenForm from '../ChildrenForm/Calendar-ChildrenForm.tsx';
 
 type CalendarDialogProps = {
   isOpen: boolean;
+  formData?: RecordType;
+  submitLabel?: string;
   onSubmit(formFields: RecordType): void;
   onCancel: () => void;
 };
@@ -28,8 +33,8 @@ type CalendarDialogProps = {
 const cnCalendar = cn('Calendar');
 const initialFormFields = { name: '', tel: '', peopleAmount: 0 };
 
-const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel }) => {
-  const [formFields, setFormFields] = useState<Partial<RecordType>>(initialFormFields);
+const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel, onSubmit, onCancel }) => {
+  const [formFields, setFormFields] = useState<Partial<RecordType>>(formData || initialFormFields);
   const [validation, setValidation] = useState<ValidationResult>({
     name: true,
     tel: true,
@@ -45,6 +50,16 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
 
   const handleChangePhone = (tel: string) => {
     setFormFields(prev => ({ ...prev, tel }));
+  };
+
+  const onCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name } = e.target;
+
+    if (!isKeyOfRecordType(name)) {
+      return;
+    }
+
+    setFormFields(prev => ({ ...prev, [name]: formFields[name] ? undefined : '1' }));
   };
 
   const handleChangeSelect = (e: SelectChangeEvent) => {
@@ -85,7 +100,7 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
   };
 
   return (
-      <Dialog className={cnCalendar('Dialog')} open={isOpen} onClose={onCancel}>
+      <Dialog className={cnCalendar('Dialog')} open={isOpen} onClose={onCancel} scroll='paper'>
           <DialogTitle>
               Добавить запись
           </DialogTitle>
@@ -125,6 +140,11 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
                   sx={{ marginTop: '15px' }}
                   fullWidth
         />
+              <FormControlLabel
+                  control={<Checkbox name='children' checked={!!formFields.children} onChange={onCheckboxClick} />}
+                  label='Имеются дети'
+        />
+              {!!formFields.children && <CalendarChildrenForm />}
               <FormControl fullWidth sx={{ marginTop: '15px' }}>
                   <InputLabel id='city'>
                       Город
@@ -151,13 +171,28 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, onSubmit, onCancel })
             ))}
                   </Select>
               </FormControl>
+              <TextField
+                  className={cnCalendar('Comments')}
+                  type='text'
+                  name='comment'
+                  value={formFields.comment || ''}
+                  label='Комментарий'
+                  onChange={handleChangeStringsFields}
+                  sx={{ marginTop: '15px' }}
+                  multiline
+                  fullWidth
+        />
+              <FormControlLabel
+                  control={<Checkbox name='rent' checked={!!formFields.rent} onChange={onCheckboxClick} />}
+                  label='Требуется прокат'
+        />
           </DialogContent>
           <DialogActions>
               <Button onClick={onCancel}>
                   Отмена
               </Button>
               <Button onClick={handleSubmitClick}>
-                  Добавить
+                  {submitLabel || 'Добавить'}
               </Button>
           </DialogActions>
       </Dialog>

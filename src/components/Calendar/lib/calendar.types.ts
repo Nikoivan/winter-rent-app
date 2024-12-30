@@ -12,6 +12,7 @@ export enum Cities {
 }
 
 export type RecordType = {
+  id: string;
   city: Cities;
   name: string;
   tel: string;
@@ -36,5 +37,7 @@ export type CalendarSliceState = {
 };
 
 export type AddRecordAction = PayloadAction<{ date: string; record: RecordType }>;
+export type RemoveRecordAction = PayloadAction<{ id: string; date: string }>;
+export type PatchRecordAction = PayloadAction<{ id: string; date: string; record: RecordType }>;
 
 export type ValidationResult = { name: boolean; tel: boolean; peopleAmount: boolean; city: boolean };

@@ -81,9 +81,9 @@ export function getPathByFulldate(fullDate: FullDate): string {
 }
 
 export function validatePhone(phone: string): boolean {
-  const clearPhone: string = (phone.replace('+', '') as string).replaceAll(' ', '');
+  const clearPhone: string = phone.replaceAll('+', '').replaceAll(' ', '');
 
-  return /^[7-9][0-9]{10}/.test(clearPhone);
+  return /^[7-9|+][0-9 ]{10,11}/.test(clearPhone);
 }
 
 export function validateForm(value: Record<string, unknown>): ValidationResult {
@@ -100,7 +100,12 @@ export function validateForm(value: Record<string, unknown>): ValidationResult {
   if (!('tel' in value) || typeof value.tel !== 'string' || !validatePhone(value.tel)) {
     result.tel = false;
   }
-  if (!('peopleAmount' in value) || typeof value.peopleAmount !== 'number' || value.peopleAmount === 0) {
+  if (
+    !('peopleAmount' in value) ||
+    typeof value.peopleAmount !== 'number' ||
+    value.peopleAmount === 0 ||
+    value.peopleAmount > 40
+  ) {
     result.peopleAmount = false;
   }
   if (!('city' in value) || !isCities(value.city)) {
