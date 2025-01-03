@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { isCities, isDay } from './typeguards.ts';
-import { CalendarSliceState, DayType, ValidationResult } from './calendar.types.ts';
+import { CalendarSliceState, DayType, RentFormFields, RentPieceNames, ValidationResult } from './calendar.types.ts';
 
 export type FullDate = {
   year: string;
@@ -86,7 +86,7 @@ export function validatePhone(phone: string): boolean {
   return /^[7-9|+][0-9 ]{10,11}/.test(clearPhone);
 }
 
-export function validateForm(value: Record<string, unknown>): ValidationResult {
+export function validateDialogForm(value: Record<string, unknown>): ValidationResult {
   const result = {
     name: true,
     peopleAmount: true,
@@ -113,6 +113,50 @@ export function validateForm(value: Record<string, unknown>): ValidationResult {
   }
 
   return result;
+}
+
+export function validateRentForm(form: RentFormFields): Record<keyof RentFormFields, boolean> {
+  const { name, gender, height, size, amount } = form;
+  const validation = {
+    name: true,
+    gender: true,
+    height: true,
+    size: true,
+    amount: true
+  };
+
+  if (!name) {
+    validation.name = false;
+  }
+
+  const needsAmount =
+    name === RentPieceNames.GLASSES || name === RentPieceNames.GLOVES || name === RentPieceNames.TUBING;
+
+  if (needsAmount && (!amount || typeof amount !== 'number')) {
+    validation.amount = false;
+  }
+
+  if (needsAmount) {
+    return validation;
+  }
+
+  if (!gender || (gender !== 'М' && gender !== 'Ж')) {
+    validation.gender = false;
+  }
+
+  if (!size || typeof size !== 'number') {
+    validation.size = false;
+  }
+
+  if (name === RentPieceNames.BOOTS || name === RentPieceNames.JACKET || name === RentPieceNames.PANTS) {
+    return validation;
+  }
+
+  if (!height || typeof height !== 'number') {
+    validation.height = false;
+  }
+
+  return validation;
 }
 
 export function getCitiesTabs(day?: DayType): string[] {

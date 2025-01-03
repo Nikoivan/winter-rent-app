@@ -1,7 +1,9 @@
-import { Cities, DayType, RecordType } from './calendar.types.ts';
+import { ChildrenData, Cities, DayType, RecordType, RentFormFields, RentPieceNames } from './calendar.types.ts';
 
-const citiesValues = new Set<string>(Object.values(Cities));
+const citiesValues = new Set<string>(Object.keys(Cities));
 const recordTypeKeys = new Set<string>(['id', 'city', 'name', 'tel', 'peopleAmount', 'children', 'comment', 'rent']);
+const keysOfRentPieceNames = new Set<string>(Object.keys(RentPieceNames));
+const keysOfRentFormFields = new Set<string>(['name', 'gender', 'height', 'size', 'amount']);
 
 export function isCities(value: unknown): value is Cities {
   return !!value && typeof value === 'string' && citiesValues.has(value);
@@ -27,6 +29,19 @@ export function isRecordType(value: unknown): value is RecordType {
   );
 }
 
+export function isChildrenData(value: unknown): value is ChildrenData {
+  return (
+    !!value &&
+    typeof value === 'object' &&
+    'count' in value &&
+    typeof value.count === 'string' &&
+    'age' in value &&
+    typeof value.age === 'string' &&
+    'needChildSeat' in value &&
+    typeof value.needChildSeat === 'boolean'
+  );
+}
+
 export function isKeyOfRecordType(value: unknown): value is keyof RecordType {
   return !!value && typeof value === 'string' && recordTypeKeys.has(value);
 }
@@ -43,4 +58,12 @@ export function isDay(value: unknown): value is DayType {
     Array.isArray(value.records) &&
     value.records.every(isRecordType)
   );
+}
+
+export function isKeyofRentPieceNames(value: unknown): value is RentPieceNames {
+  return !!value && typeof value === 'string' && keysOfRentPieceNames.has(value);
+}
+
+export function isKeyofRentFormFields(value: unknown): value is keyof RentFormFields {
+  return !!value && typeof value === 'string' && keysOfRentFormFields.has(value);
 }

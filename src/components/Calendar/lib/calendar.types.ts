@@ -1,15 +1,50 @@
 import { PayloadAction } from '@reduxjs/toolkit';
-import { SimpleRentPiece } from '../../../lib/redux/slices/auditSlice/auditSlice.types.ts';
 
 export enum Cities {
-  SEVASTOPOL = 'Sevastopol',
-  SIMFEROPOL = 'Simferopol',
-  BAKHCHISARAY = 'Bakhchisaray',
-  YALTA = 'Yalta',
-  EVPATORIYA = 'Evpatoriya',
-  ALUSHTA = 'Alushta',
-  SOKOLINOE = 'Sokolinoe',
+  SEVASTOPOL = 'Севастополь',
+  SIMFEROPOL = 'Симферополь',
+  BAKHCHISARAY = 'Бахчисарай',
+  SOKOLINOE = 'Соколиное',
+  TANKOVOE = 'Танковое',
+  YALTA = 'Ялта',
+  EVPATORIYA = 'Евпатория',
+  ALUSHTA = 'Алушта',
 }
+
+export enum RentPieceNames {
+  SNOWBOARD_KIT = 'Сноуборд комплект',
+  SKI_KIT = 'Лыжи комплект',
+  BOOTS = 'Ботинки',
+  TUBING = 'Тюбинг',
+  JACKET = 'Куртка',
+  PANTS = 'Штаны',
+  GLOVES = 'Перчатки',
+  GLASSES = 'Очки',
+  HELMET = 'ШЛЕМ',
+}
+
+export enum SIZES {
+  XS = 'XS',
+  S = 'S',
+  M = 'M',
+  L = 'L',
+  XL = 'XL',
+  XXL = 'XXL',
+}
+
+export type RentFormFields = {
+  name: RentPieceNames | '';
+  gender: 'М' | 'Ж' | '';
+  height: number | '';
+  size: number | '';
+  amount: number | '';
+};
+
+export type ChildrenData = {
+  count: string;
+  age: string;
+  needChildSeat: boolean;
+};
 
 export type RecordType = {
   id: string;
@@ -17,13 +52,9 @@ export type RecordType = {
   name: string;
   tel: string;
   peopleAmount: number;
-  children?: {
-    count: string;
-    age: string;
-    needChildSeat: boolean;
-  };
+  children?: ChildrenData;
   comment?: string;
-  rent?: SimpleRentPiece[];
+  rent?: Partial<RentFormFields>[];
 };
 
 export type DayType = {

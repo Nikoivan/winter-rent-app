@@ -1,30 +1,20 @@
-import { cn } from '@bem-react/classname';
 import { ChangeEvent, FocusEvent, FC, useState } from 'react';
-import {
-  Button,
-  Checkbox,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  FormControlLabel,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField
-} from '@mui/material';
-import { Cities, RecordType, ValidationResult } from '../lib/calendar.types.ts';
-import { isCities, isKeyOfRecordType, isRecordType } from '../lib/typeguards.ts';
-import { validateForm } from '../lib/calendar.utils.ts';
+import { cn } from '@bem-react/classname';
 import { v4 } from 'uuid';
 import { MuiTelInput } from 'mui-tel-input';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, SelectChangeEvent, TextField } from '@mui/material';
+
+import { RecordType, RentFormFields, ValidationResult } from '../lib/calendar.types.ts';
+import { isChildrenData, isCities, isRecordType } from '../lib/typeguards.ts';
+import { validateDialogForm } from '../lib/calendar.utils.ts';
 import CalendarChildrenForm from '../ChildrenForm/Calendar-ChildrenForm.tsx';
+import CalendarSelectCities from '../SelectCities/Calendar-SelectCities.tsx';
+import CalendarRent from '../Rent/Calendar-Rent.tsx';
 
 type CalendarDialogProps = {
   isOpen: boolean;
   formData?: RecordType;
+  title?: string;
   submitLabel?: string;
   onSubmit(formFields: RecordType): void;
   onCancel: () => void;
@@ -32,37 +22,34 @@ type CalendarDialogProps = {
 
 const cnCalendar = cn('Calendar');
 const initialFormFields = { name: '', tel: '', peopleAmount: 0 };
+const initialValidation = { name: true, tel: true, peopleAmount: true, city: true };
 
-const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel, onSubmit, onCancel }) => {
+const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, title, submitLabel, onSubmit, onCancel }) => {
   const [formFields, setFormFields] = useState<Partial<RecordType>>(formData || initialFormFields);
-  const [validation, setValidation] = useState<ValidationResult>({
-    name: true,
-    tel: true,
-    peopleAmount: true,
-    city: true
-  });
+  const [validation, setValidation] = useState<ValidationResult>(initialValidation);
 
-  const handleChangeStringsFields = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeStringsFields = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.currentTarget;
 
     setFormFields(prev => ({ ...prev, [name]: name === 'peopleAmount' || name === 'tel' ? Number(value) : value }));
   };
 
-  const handleChangePhone = (tel: string) => {
+  const onChangePhone = (tel: string) => {
     setFormFields(prev => ({ ...prev, tel }));
   };
 
-  const onCheckboxClick = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name } = e.target;
+  const onChangeChildrenForm = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    const children = formFields.children ? { ...formFields.children, [name]: value } : { [name]: value };
 
-    if (!isKeyOfRecordType(name)) {
+    if (!isChildrenData(children)) {
       return;
     }
 
-    setFormFields(prev => ({ ...prev, [name]: formFields[name] ? undefined : '1' }));
+    setFormFields(prev => ({ ...prev, children }));
   };
 
-  const handleChangeSelect = (e: SelectChangeEvent) => {
+  const onChangeSelect = (e: SelectChangeEvent) => {
     const { name, value } = e.target;
 
     if (name !== 'city' || !isCities(value)) {
@@ -72,7 +59,7 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
     setFormFields(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const onFocus = (e: FocusEvent<HTMLInputElement>) => {
     const { name } = e.target;
 
     if (!validation[name as keyof ValidationResult]) {
@@ -81,7 +68,7 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
   };
 
   const handleSubmitClick = () => {
-    const validationResult = validateForm(formFields);
+    const validationResult = validateDialogForm(formFields);
 
     if (Object.values(validationResult).some(valid => !valid)) {
       setValidation(validationResult);
@@ -99,10 +86,17 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
     onSubmit(data);
   };
 
+  const onSubmitRent = (rentPieces: Partial<RentFormFields>) => {
+    const rent = 'rent' in formFields && Array.isArray(formFields.rent) ? [...formFields.rent] : [];
+    rent.push(rentPieces);
+
+    setFormFields(prev => ({ ...prev, rent }));
+  };
+
   return (
       <Dialog className={cnCalendar('Dialog')} open={isOpen} onClose={onCancel} scroll='paper'>
           <DialogTitle>
-              Добавить запись
+              {title || 'Добавить запись'}
           </DialogTitle>
           <DialogContent>
               <TextField
@@ -112,8 +106,8 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
                   value={formFields.name}
                   error={!validation.name}
                   label='Имя'
-                  onChange={handleChangeStringsFields}
-                  onFocus={handleFocus}
+                  onChange={onChangeStringsFields}
+                  onFocus={onFocus}
                   sx={{ marginTop: '15px' }}
                   fullWidth
         />
@@ -123,8 +117,8 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
                   value={formFields.tel || ''}
                   error={!validation.tel}
                   label='Телефон'
-                  onChange={handleChangePhone}
-                  onFocus={handleFocus}
+                  onChange={onChangePhone}
+                  onFocus={onFocus}
                   sx={{ marginTop: '15px' }}
                   fullWidth
         />
@@ -135,57 +129,25 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, submitLabel
                   value={formFields.peopleAmount || ''}
                   error={!validation.peopleAmount}
                   label='Количество человек'
-                  onChange={handleChangeStringsFields}
-                  onFocus={handleFocus}
+                  onChange={onChangeStringsFields}
+                  onFocus={onFocus}
                   sx={{ marginTop: '15px' }}
                   fullWidth
         />
-              <FormControlLabel
-                  control={<Checkbox name='children' checked={!!formFields.children} onChange={onCheckboxClick} />}
-                  label='Имеются дети'
-        />
-              {!!formFields.children && <CalendarChildrenForm />}
-              <FormControl fullWidth sx={{ marginTop: '15px' }}>
-                  <InputLabel id='city'>
-                      Город
-                  </InputLabel>
-                  <Select
-                      className={cnCalendar('Cities')}
-                      name='city'
-                      value={formFields.city || ''}
-                      error={!validation.city}
-                      labelId='city'
-                      label='Город'
-                      onChange={handleChangeSelect}
-                      onFocus={handleFocus}
-          >
-                      <MenuItem value=''>
-                          <em>
-                              Не указано
-                          </em>
-                      </MenuItem>
-                      {Object.entries(Cities).map(([key, value]: string[]) => (
-                          <MenuItem value={value} key={value}>
-                              {key}
-                          </MenuItem>
-            ))}
-                  </Select>
-              </FormControl>
+              <CalendarChildrenForm form={formFields.children} onChange={onChangeChildrenForm} />
+              <CalendarSelectCities onChange={onChangeSelect} onFocus={onFocus} />
               <TextField
                   className={cnCalendar('Comments')}
                   type='text'
                   name='comment'
                   value={formFields.comment || ''}
                   label='Комментарий'
-                  onChange={handleChangeStringsFields}
+                  onChange={onChangeStringsFields}
                   sx={{ marginTop: '15px' }}
                   multiline
                   fullWidth
         />
-              <FormControlLabel
-                  control={<Checkbox name='rent' checked={!!formFields.rent} onChange={onCheckboxClick} />}
-                  label='Требуется прокат'
-        />
+              <CalendarRent onSubmit={onSubmitRent} />
           </DialogContent>
           <DialogActions>
               <Button onClick={onCancel}>

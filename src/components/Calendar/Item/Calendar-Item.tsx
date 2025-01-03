@@ -48,6 +48,7 @@ const CalendarItem: FC<CalendarItemProps> = ({ id, name, tel, peopleAmount, date
           <CalendarDialog
               isOpen={isOpen}
               formData={{ id, name, tel, peopleAmount, ...props }}
+              title='Изменить запись'
               submitLabel='Сохранить'
               onSubmit={onChange}
               onCancel={onClickOpen}
