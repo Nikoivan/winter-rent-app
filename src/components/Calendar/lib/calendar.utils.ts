@@ -193,3 +193,9 @@ export function getInitialState(): CalendarSliceState {
 
   return currentCalendarState;
 }
+
+export function getLabelByRentFormField(item: Partial<RentFormFields>): string {
+  const elements = Object.values(item).filter(Boolean);
+
+  return elements.join(', ');
+}

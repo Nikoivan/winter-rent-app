@@ -7,7 +7,7 @@ type CalendarSelectCitiesProps = {
   value?: string;
   invalid?: boolean;
   onChange: (e: SelectChangeEvent) => void;
-  onFocus: (e: FocusEvent<HTMLInputElement>) => void;
+  onFocus: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 };
 
 const cnCalendar = cn('Calendar');
@@ -25,7 +25,10 @@ const CalendarSelectCities: FC<CalendarSelectCitiesProps> = ({ value, invalid, o
             labelId='city'
             label='Город'
             onChange={onChange}
-            onFocus={onFocus}
+            onFocus={e => {
+        e.target.name = 'city';
+        onFocus(e);
+      }}
     >
             <MenuItem value=''>
                 <em>

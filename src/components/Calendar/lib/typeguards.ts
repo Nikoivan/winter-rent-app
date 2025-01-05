@@ -1,12 +1,12 @@
 import { ChildrenData, Cities, DayType, RecordType, RentFormFields, RentPieceNames } from './calendar.types.ts';
 
-const citiesValues = new Set<string>(Object.keys(Cities));
+const citiesKeys = new Set<string>(Object.keys(Cities));
 const recordTypeKeys = new Set<string>(['id', 'city', 'name', 'tel', 'peopleAmount', 'children', 'comment', 'rent']);
 const keysOfRentPieceNames = new Set<string>(Object.keys(RentPieceNames));
 const keysOfRentFormFields = new Set<string>(['name', 'gender', 'height', 'size', 'amount']);
 
 export function isCities(value: unknown): value is Cities {
-  return !!value && typeof value === 'string' && citiesValues.has(value);
+  return !!value && typeof value === 'string' && citiesKeys.has(value);
 }
 
 export function isRecordType(value: unknown): value is RecordType {
