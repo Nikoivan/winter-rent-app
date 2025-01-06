@@ -2,7 +2,7 @@ import { cn } from '@bem-react/classname';
 import { FC } from 'react';
 import { Stack } from '@mui/material';
 
-import { RentFormFields } from '../lib/calendar.types.ts';
+import { RentFormFields } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 import CalendarRentItem from '../RentItem/Calendar-RentItem.tsx';
 
 type CalendarRentListProps = {

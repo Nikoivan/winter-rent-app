@@ -4,8 +4,8 @@ import { IconButton, ListItem, ListItemText } from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import InsertCommentIcon from '@mui/icons-material/InsertComment';
 
-import { RecordType } from '../lib/calendar.types.ts';
-import { calendarActions } from '../lib/calendarSlice.ts';
+import { RecordType } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
+import { calendarActions } from '../../../lib/redux/slices/calendarSlice/calendarSlice.ts';
 import { useAppDispatch } from '../../../lib/redux/store.ts';
 import TelAnchor from '../../Anchor/TelAnchor.tsx';
 import CalendarDialog from '../Dialog/Calendar-Dialog.tsx';

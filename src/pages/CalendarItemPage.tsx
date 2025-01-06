@@ -7,11 +7,11 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import { useAppDispatch, useAppSelector } from '../lib/redux/store.ts';
 import PageHeader from '../components/PageHeader/PageHeader.tsx';
 import CalendarDialog from '../components/Calendar/Dialog/Calendar-Dialog.tsx';
-import { Cities, RecordType } from '../components/Calendar/lib/calendar.types.ts';
-import { calendarActions } from '../components/Calendar/lib/calendarSlice.ts';
+import { Cities, RecordType } from '../lib/redux/slices/calendarSlice/calendar.types.ts';
+import { calendarActions } from '../lib/redux/slices/calendarSlice/calendarSlice.ts';
 import CalendarList from '../components/Calendar/List/Calendar-List.tsx';
-import { getCitiesTabs } from '../components/Calendar/lib/calendar.utils.ts';
-import { isCities } from '../components/Calendar/lib/typeguards.ts';
+import { getCitiesTabs } from '../lib/redux/slices/calendarSlice/calendar.utils.ts';
+import { isCities } from '../lib/redux/slices/calendarSlice/typeguards.ts';
 
 const cnCalendar = cn('Calendar');
 const cnCalendarItemPage = cn('CalendarItemPage');

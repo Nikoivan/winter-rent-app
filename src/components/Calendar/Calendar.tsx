@@ -1,6 +1,6 @@
 import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
-import getNewArr from './lib/calendar.utils.ts';
+import getNewArr from '../../lib/redux/slices/calendarSlice/calendar.utils.ts';
 import CalendarCell from './Cell/Calendar-Cell.tsx';
 
 import './Calendar.scss';

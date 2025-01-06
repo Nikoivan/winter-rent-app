@@ -1,4 +1,5 @@
 import js from '@eslint/js';
+import jest from 'eslint-plugin-jest';
 import globals from 'globals';
 import eslintReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
@@ -7,7 +8,7 @@ import prettierPlugin from 'eslint-plugin-prettier';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, tseslint.configs.recommended, {
-  files: ['**/*.{ts,tsx}'],
+  files: ['**/*.{ts,tsx}', 'test/**'],
   languageOptions: {
     ecmaVersion: 2020,
     globals: globals.browser,
@@ -22,6 +23,8 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
   rules: {
     ...eslintReact.configs.recommended.rules,
     ...reactHooks.configs.recommended.rules,
+    ...jest.configs['flat/recommended'].rules,
+    'jest/prefer-expect-assertions': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     semi: [2, 'always'],
     'react/jsx-curly-newline': ['error'],
@@ -143,6 +146,8 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'react/self-closing-comp': 2,
     'react/style-prop-object': 2,
     'react/void-dom-elements-no-children': 2,
+
+    // jest
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
     '@typescript-eslint/consistent-type-assertions': 2,

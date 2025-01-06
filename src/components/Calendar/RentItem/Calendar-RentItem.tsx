@@ -1,8 +1,8 @@
 import { cn } from '@bem-react/classname';
 import { FC } from 'react';
 import { Chip } from '@mui/material';
-import { getLabelByRentFormField } from '../lib/calendar.utils.ts';
-import { RentFormFields } from '../lib/calendar.types.ts';
+import { getLabelByRentFormField } from '../../../lib/redux/slices/calendarSlice/calendar.utils.ts';
+import { RentFormFields } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 
 type CalendarRentItemProps = {
   item: Partial<RentFormFields>;

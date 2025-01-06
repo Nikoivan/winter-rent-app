@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
 import { Checkbox, FormControlLabel, TextField } from '@mui/material';
-import { ChildrenData } from '../lib/calendar.types.ts';
+import { ChildrenData } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 
 type CalendarChildrenFormProps = {
   form?: ChildrenData;

@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { CellType, getPathByFulldate } from '../lib/calendar.utils.ts';
+import { CellType, getPathByFulldate } from '../../../lib/redux/slices/calendarSlice/calendar.utils.ts';
 import { Link } from 'react-router';
 
 const cnCalendar = cn('Calendar');

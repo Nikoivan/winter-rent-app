@@ -3,7 +3,7 @@ import { cn } from '@bem-react/classname';
 import { List } from '@mui/material';
 import { v4 } from 'uuid';
 
-import { RecordType } from '../lib/calendar.types.ts';
+import { RecordType } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 import CalendarItem from '../Item/Calendar-Item.tsx';
 
 type CalendarListProps = {

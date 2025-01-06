@@ -4,7 +4,7 @@ import createSagaMiddleware from 'redux-saga';
 
 import { auditSlice } from './slices/auditSlice/auditSlice.ts';
 import { localStorageMiddleware } from './middleWares/localStorageMiddleware.tsx';
-import { calendarSlice } from '../../components/Calendar/lib/calendarSlice.ts';
+import { calendarSlice } from './slices/calendarSlice/calendarSlice.ts';
 
 const sagaMiddleware = createSagaMiddleware();
 const rootReducer = combineSlices(auditSlice, calendarSlice);

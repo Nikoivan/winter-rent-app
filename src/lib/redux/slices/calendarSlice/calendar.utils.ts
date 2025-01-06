@@ -1,6 +1,6 @@
 import moment from 'moment';
-import { isCities, isDay } from './typeguards.ts';
-import { CalendarSliceState, DayType, RentFormFields, RentPieceNames, ValidationResult } from './calendar.types.ts';
+import { isCities, isDay } from './typeguards';
+import { CalendarSliceState, DayType, RentFormFields, RentPieceNames, ValidationResult } from './calendar.types';
 
 export type FullDate = {
   year: string;
@@ -39,7 +39,7 @@ function getCell(currentDate: moment.Moment, date: Date) {
   return {
     fullDate: { year: currentDate.format('YYYY'), month: currentDate.format('MM'), date: currentDate.format('DD') },
     date: currentDate.format('D'),
-    prop: currentDate.format('MM') === moment(date).format('MM') ? null : ' Calendar-OtherMonth'
+    prop: currentDate.format('MM') === moment(date).format('MM') ? null : ' Calendar-OtherMonth',
   };
 }
 
@@ -81,7 +81,7 @@ export function getPathByFulldate(fullDate: FullDate): string {
 }
 
 export function validatePhone(phone: string): boolean {
-  const clearPhone: string = phone.replaceAll('+', '').replaceAll(' ', '');
+  const clearPhone: string = phone.replace('+', '').replace(' ', '');
 
   return /^[7-9|+][0-9 ]{10,11}/.test(clearPhone);
 }
@@ -91,7 +91,7 @@ export function validateDialogForm(value: Record<string, unknown>): ValidationRe
     name: true,
     peopleAmount: true,
     tel: true,
-    city: true
+    city: true,
   };
 
   if (!('name' in value) || typeof value.name !== 'string' || value.name === '') {
@@ -122,7 +122,7 @@ export function validateRentForm(form: RentFormFields): Record<keyof RentFormFie
     gender: true,
     height: true,
     size: true,
-    amount: true
+    amount: true,
   };
 
   if (!name) {
@@ -176,7 +176,7 @@ export function getCitiesTabs(day?: DayType): string[] {
 export function getInitialState(): CalendarSliceState {
   const jsonState = window.localStorage.getItem('records-calendar');
   const currentCalendarState: CalendarSliceState = {
-    days: []
+    days: [],
   };
 
   if (jsonState) {

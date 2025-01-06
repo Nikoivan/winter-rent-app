@@ -1,0 +1,1 @@
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/winter-rent-crm/dev-sw.js?dev-sw', { scope: '/winter-rent-crm/', type: 'classic' })

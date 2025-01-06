@@ -2,10 +2,10 @@ import { ChangeEvent, FC, FocusEvent, useState } from 'react';
 import { cn } from '@bem-react/classname';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, SelectChangeEvent, TextField } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { RentFormFields, RentPieceNames } from '../lib/calendar.types.ts';
+import { RentFormFields, RentPieceNames } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 import CalendarRentSelect from '../RentSelect/Calendar-RentSelect.tsx';
-import { isKeyofRentFormFields } from '../lib/typeguards.ts';
-import { validateRentForm } from '../lib/calendar.utils.ts';
+import { isKeyofRentFormFields } from '../../../lib/redux/slices/calendarSlice/typeguards.ts';
+import { validateRentForm } from '../../../lib/redux/slices/calendarSlice/calendar.utils.ts';
 
 type CalendarRentProps = {
   onSubmit(rentPieces: Partial<RentFormFields>): void;

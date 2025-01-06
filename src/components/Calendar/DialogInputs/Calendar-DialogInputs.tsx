@@ -2,7 +2,7 @@ import { ChangeEvent, FC, FocusEvent } from 'react';
 import { TextField } from '@mui/material';
 import { MuiTelInput } from 'mui-tel-input';
 import { cn } from '@bem-react/classname';
-import { RecordType, ValidationResult } from '../lib/calendar.types';
+import { RecordType, ValidationResult } from '../../../lib/redux/slices/calendarSlice/calendar.types';
 
 type CalendarDialogInputProps = {
   formFields: Partial<RecordType>;

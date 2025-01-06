@@ -1,7 +1,7 @@
 import { cn } from '@bem-react/classname';
 import { FC, FocusEvent } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { Cities } from '../lib/calendar.types.ts';
+import { Cities } from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
 
 type CalendarSelectCitiesProps = {
   value?: string;

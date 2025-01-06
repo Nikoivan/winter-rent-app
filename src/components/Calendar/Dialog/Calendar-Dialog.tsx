@@ -3,9 +3,13 @@ import { cn } from '@bem-react/classname';
 import { v4 } from 'uuid';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, SelectChangeEvent } from '@mui/material';
 
-import { RecordType, RentFormFields, ValidationResult } from '../lib/calendar.types.ts';
-import { isChildrenData, isCities, isRecordType } from '../lib/typeguards.ts';
-import { getLabelByRentFormField, validateDialogForm } from '../lib/calendar.utils.ts';
+import {
+  RecordType,
+  RentFormFields,
+  ValidationResult,
+} from '../../../lib/redux/slices/calendarSlice/calendar.types.ts';
+import { isChildrenData, isCities, isRecordType } from '../../../lib/redux/slices/calendarSlice/typeguards.ts';
+import { getLabelByRentFormField, validateDialogForm } from '../../../lib/redux/slices/calendarSlice/calendar.utils.ts';
 import CalendarChildrenForm from '../ChildrenForm/Calendar-ChildrenForm.tsx';
 import CalendarSelectCities from '../SelectCities/Calendar-SelectCities.tsx';
 import CalendarRent from '../Rent/Calendar-Rent.tsx';
@@ -100,37 +104,31 @@ const CalendarDialog: FC<CalendarDialogProps> = ({ isOpen, formData, title, subm
   };
 
   return (
-      <Dialog className={cnCalendar('Dialog')} open={isOpen} onClose={onCancel} scroll='paper'>
-          <DialogTitle>
-              {title || 'Добавить запись'}
-          </DialogTitle>
-          <DialogContent>
-              <CalendarDialogInputs
-                  formFields={formFields}
-                  validation={validation}
-                  onChangeStringsFields={onChangeStringsFields}
-                  onChangePhone={onChangePhone}
-                  onFocus={onFocus}
+    <Dialog className={cnCalendar('Dialog')} open={isOpen} onClose={onCancel} scroll='paper'>
+      <DialogTitle>{title || 'Добавить запись'}</DialogTitle>
+      <DialogContent>
+        <CalendarDialogInputs
+          formFields={formFields}
+          validation={validation}
+          onChangeStringsFields={onChangeStringsFields}
+          onChangePhone={onChangePhone}
+          onFocus={onFocus}
         />
-              <CalendarChildrenForm form={formFields.children} onChange={onChangeChildrenForm} />
-              <CalendarSelectCities
-                  value={formFields.city}
-                  invalid={!validation.city}
-                  onChange={onChangeSelect}
-                  onFocus={onFocus}
+        <CalendarChildrenForm form={formFields.children} onChange={onChangeChildrenForm} />
+        <CalendarSelectCities
+          value={formFields.city}
+          invalid={!validation.city}
+          onChange={onChangeSelect}
+          onFocus={onFocus}
         />
-              <CalendarRent onSubmit={onSubmitRent} />
-              {!!formFields.rent?.length && <CalendarRentList onDelete={onDelete} items={formFields.rent} />}
-          </DialogContent>
-          <DialogActions>
-              <Button onClick={onCancel}>
-                  Отмена
-              </Button>
-              <Button onClick={handleSubmitClick}>
-                  {submitLabel || 'Добавить'}
-              </Button>
-          </DialogActions>
-      </Dialog>
+        <CalendarRent onSubmit={onSubmitRent} />
+        {!!formFields.rent?.length && <CalendarRentList onDelete={onDelete} items={formFields.rent} />}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onCancel}>Отмена</Button>
+        <Button onClick={handleSubmitClick}>{submitLabel || 'Добавить'}</Button>
+      </DialogActions>
+    </Dialog>
   );
 };
 
