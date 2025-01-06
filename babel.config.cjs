@@ -5,8 +5,6 @@ module.exports = {
       {
         targets: {
           node: 'current',
-          lib: 'ES2021',
-          esModule: true,
         },
       },
     ],

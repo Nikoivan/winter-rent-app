@@ -1,21 +1,30 @@
 import js from '@eslint/js';
 import jest from 'eslint-plugin-jest';
 import globals from 'globals';
+import sonarjs from 'eslint-plugin-sonarjs';
+import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import eslintReact from 'eslint-plugin-react';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import prettierPlugin from 'eslint-plugin-prettier';
+import importPlugin from 'eslint-plugin-import';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, tseslint.configs.recommended, {
   files: ['**/*.{ts,tsx}', 'test/**'],
+  ...jest.configs['flat/recommended'],
+  ...importPlugin.flatConfigs.recommended,
   languageOptions: {
-    ecmaVersion: 2020,
+    ecmaVersion: 'latest',
     globals: globals.browser,
+    sourceType: 'module',
   },
   plugins: {
     '@typescript-eslint': tseslint.plugin,
     react: eslintReact,
+    jest,
+    sonarjs,
+    unicorn: eslintPluginUnicorn,
     'react-hooks': reactHooks,
     'react-refresh': reactRefresh,
     prettier: prettierPlugin,
@@ -48,7 +57,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'no-func-assign': 2,
     'no-new': 2,
     'no-sparse-arrays': 2,
-    'no-undef': 2,
+    'no-undef': 0,
     'no-unexpected-multiline': 2,
     'no-unreachable': 2,
     strict: 2,
@@ -120,6 +129,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'key-spacing': [2, { beforeColon: false, afterColon: true, mode: 'strict' }],
     'space-infix-ops': 2,
     'newline-before-return': 'error',
+    'import/no-commonjs': 'off',
 
     // REACT
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
@@ -133,7 +143,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'react/jsx-key': 2,
     'react/jsx-no-duplicate-props': 2,
     'react/jsx-no-literals': 0,
-    'react/jsx-no-undef': 2,
+    'react/jsx-no-undef': 0,
     'react/jsx-sort-props': 0,
     'react/jsx-tag-spacing': [2, { beforeClosing: 'never', beforeSelfClosing: 'always' }],
     'react/jsx-uses-react': 2,
@@ -147,7 +157,11 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'react/style-prop-object': 2,
     'react/void-dom-elements-no-children': 2,
 
-    // jest
+    // sonarjs
+    'sonarjs/no-implicit-dependencies': 'error',
+
+    // unicorn
+    'unicorn/better-regex': 'error',
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
     '@typescript-eslint/consistent-type-assertions': 2,
@@ -181,6 +195,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     '@typescript-eslint/no-empty-function': ['error', { allow: ['private-constructors'] }],
     '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-var-requires': 'off',
     ...tseslint.configs.recommended.rules,
 
     // https://github.com/danielnixon/eslint-plugin-total-functions
