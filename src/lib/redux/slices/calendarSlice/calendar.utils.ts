@@ -80,8 +80,14 @@ export function getPathByFulldate(fullDate: FullDate): string {
   return `${date}-${month}-${year}`;
 }
 
-export function validatePhone(phone: string): boolean {
-  const clearPhone: string = phone.replace('+', '').replace(' ', '');
+export function validatePhone(phone: unknown): boolean {
+  const isNumber = typeof phone === 'number';
+
+  if (!phone || (typeof phone !== 'string' && !isNumber)) {
+    return false;
+  }
+
+  const clearPhone: string = (isNumber ? String(phone) : phone).replace('+', '').replace(' ', '');
 
   return /^[+7-9|][\d ]{10,11}/.test(clearPhone);
 }
@@ -97,7 +103,11 @@ export function validateDialogForm(value: Record<string, unknown>): ValidationRe
   if (!('name' in value) || typeof value.name !== 'string' || value.name === '') {
     result.name = false;
   }
-  if (!('tel' in value) || typeof value.tel !== 'string' || !validatePhone(value.tel)) {
+  if (
+    !('tel' in value) ||
+    (typeof value.tel !== 'string' && typeof value.tel !== 'number') ||
+    !validatePhone(value.tel)
+  ) {
     result.tel = false;
   }
   if (

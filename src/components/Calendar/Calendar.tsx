@@ -1,11 +1,16 @@
 import { FC, useState } from 'react';
 import { cn } from '@bem-react/classname';
+import { ArrowLeft, ArrowRight } from '@mui/icons-material';
+import { IconButton } from '@mui/material';
+
 import getNewArr from '../../lib/redux/slices/calendarSlice/calendar.utils.ts';
 import CalendarCell from './Cell/Calendar-Cell.tsx';
 
 import './Calendar.scss';
-import { IconButton } from '@mui/material';
-import { ArrowLeft, ArrowRight } from '@mui/icons-material';
+
+type CalendarProps = {
+  title?: string;
+};
 
 const WEEK = ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'];
 const MONTHS = [
@@ -29,7 +34,7 @@ const getDate = () => {
 };
 const cnCalendar = cn('Calendar');
 
-const Calendar: FC = () => {
+const Calendar: FC<CalendarProps> = ({ title }) => {
   const [currentMonth, setCurrentMonth] = useState<Date>(getDate());
 
   const nextMonth = () => {
@@ -48,6 +53,7 @@ const Calendar: FC = () => {
 
   return (
       <div className={cnCalendar()}>
+          {title}
           <div className={cnCalendar('Header')}>
               <IconButton onClick={previousMonth} className={cnCalendar('Previous')} color='inherit'>
                   <ArrowLeft fontSize='large' />

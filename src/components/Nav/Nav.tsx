@@ -23,7 +23,9 @@ const Nav: FC = () => {
       <nav className={cnNav()}>
           <div className={cnNav('LogoWrap')}>
               <Link className={cnNav('LogoLink')} to='/winter-rent-crm'>
-                  Energy-Tour
+                  <span data-testid='cypress-title'>
+                      Energy-Tour
+                  </span>
               </Link>
           </div>
           <div className={cnNav('MenuWrap')}>

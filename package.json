@@ -5,11 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "start": "npm start",
     "build": "tsc -b && vite build",
     "lint": "eslint . --fix",
     "preview": "vite preview",
     "deploy": "gh-pages -d dist",
-    "test": "jest"
+    "test": "jest",
+    "cy": "cypress open",
+    "cy:run": "cypress run",
+    "test:e2e": "start-server-and-test start http://localhost:3000 cy:run",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@bem-react/classname": "^1.6.0",
@@ -40,7 +46,15 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.26.0",
+    "@chromatic-com/storybook": "3.2.3",
     "@eslint/js": "^9.15.0",
+    "@storybook/addon-essentials": "8.4.7",
+    "@storybook/addon-interactions": "8.4.7",
+    "@storybook/addon-onboarding": "8.4.7",
+    "@storybook/blocks": "8.4.7",
+    "@storybook/react": "8.4.7",
+    "@storybook/react-vite": "8.4.7",
+    "@storybook/test": "8.4.7",
     "@stylistic/eslint-plugin-ts": "^2.12.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^18.3.12",
@@ -49,8 +63,10 @@
     "@typescript-eslint/parser": "^8.18.0",
     "@vitejs/plugin-react": "^4.3.4",
     "babel-jest": "^29.7.0",
+    "cypress": "^13.17.0",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-cypress": "^4.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jest": "^28.10.0",
     "eslint-plugin-prettier": "^5.2.1",
@@ -58,6 +74,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.14",
     "eslint-plugin-sonarjs": "^3.0.1",
+    "eslint-plugin-storybook": "^0.11.2",
     "eslint-plugin-unicorn": "^56.0.1",
     "gh-pages": "^6.2.0",
     "ghpages": "^0.0.10",
@@ -70,6 +87,8 @@
     "react-test-renderer": "18.3",
     "regexp": "^1.0.0",
     "sass": "^1.82.0",
+    "start-server-and-test": "^2.0.9",
+    "storybook": "8.4.7",
     "stylistic": "^0.2.4",
     "ts-jest": "^29.2.5",
     "ts-node": "^10.9.2",
@@ -77,5 +96,13 @@
     "typescript-eslint": "^8.15.0",
     "vite": "^6.0.1",
     "vite-plugin-pwa": "^0.21.1"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest",
+      "plugin:storybook/recommended",
+      "plugin:cypress/recommended"
+    ]
   }
 }

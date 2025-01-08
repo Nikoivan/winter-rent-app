@@ -164,6 +164,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'unicorn/better-regex': 'error',
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
+    ...tseslint.configs.recommended.rules,
     '@typescript-eslint/consistent-type-assertions': 2,
     '@typescript-eslint/no-empty-interface': 2,
     '@typescript-eslint/no-unused-vars': [
@@ -196,7 +197,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     '@typescript-eslint/no-unsafe-enum-comparison': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-var-requires': 'off',
-    ...tseslint.configs.recommended.rules,
+    '@typescript-eslint/no-require-imports': 'off',
 
     // https://github.com/danielnixon/eslint-plugin-total-functions
     'total-functions/require-strict-mode': 'off',
