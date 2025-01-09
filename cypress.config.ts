@@ -2,8 +2,11 @@ const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
   e2e: {
+    baseUrl: 'http://localhost:5173',
+    integrationFolder: 'e2e',
+    pluginsFile: false,
+    supportFile: false,
     video: false,
-    baseUrl: 'http://localhost:5173/winter-rent-crm',
     specPattern: 'cypress/e2e/**/*.e2e.ts'
   },
   component: {

@@ -1,6 +1,12 @@
 body .RentPieceItem {
-  &-Text {
+  &-PayBtn {
     &_payed {
+      text-decoration: line-through;
+    }
+  }
+
+  &-PayBtn {
+    &_payed:focus {
       text-decoration: line-through;
     }
   }

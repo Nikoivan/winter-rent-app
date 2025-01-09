@@ -27,5 +27,10 @@
   "include": [
     "src",
     "cypress"
+  ],
+  "types": [
+    "vite/client",
+    "@types/jest",
+    "cypress"
   ]
 }

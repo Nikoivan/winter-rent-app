@@ -1,12 +1,20 @@
-import { FC, memo, useCallback } from 'react';
+import { FC } from 'react';
 import { cn } from '@bem-react/classname';
-import { Badge, IconButton, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import { Checkbox } from '@mui/material';
+import {
+  Badge,
+  Button,
+  Checkbox,
+  IconButton,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText
+} from '@mui/material';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
 import { auditActions } from '../../lib/redux/slices/auditSlice/auditSlice.ts';
 import { useAppDispatch } from '../../lib/redux/store.ts';
-import { RentPieceType } from '../../lib/redux/slices/auditSlice/auditSlice.types.ts';
+import { RentPieceActionTypes, RentPieceType } from '../../lib/redux/slices/auditSlice/auditSlice.types.ts';
 
 import './RentPiece.scss';
 
@@ -16,38 +24,53 @@ type RentPieceItemFCProps = RentPieceType & {
 
 const cnRentPieceItem = cn('RentPieceItem');
 
-const RentPieceItemFC: FC<RentPieceItemFCProps> = ({ itemId, id, title, price, returned, payed, count }) => {
+const RentPieceItem: FC<RentPieceItemFCProps> = ({ itemId, id, title, price, returned, payed, count }) => {
   const dispatch = useAppDispatch();
 
-  const handleDeletePiece = useCallback(() => {
-    dispatch(auditActions.removeRentPiece({ itemId, pieceId: id }));
-  }, [dispatch, id, itemId]);
-
-  const handleReturnPiece = useCallback(() => dispatch(auditActions.checkReturnRentPiece({ itemId, pieceId: id })), []);
+  const onRemoveClick = () =>
+    dispatch(auditActions.checkChangeRentPiece({ itemId, pieceId: id, actionType: RentPieceActionTypes.DELETE }));
+  const onPayClick = () =>
+    dispatch(
+      auditActions.checkChangeRentPiece({
+        itemId,
+        pieceId: id,
+        actionType: RentPieceActionTypes.PAY
+      })
+    );
+  const onReturnClick = () =>
+    dispatch(
+      auditActions.checkChangeRentPiece({
+        itemId,
+        pieceId: id,
+        actionType: RentPieceActionTypes.RETURN
+      })
+    );
 
   return (
       <ListItem className={cnRentPieceItem()} sx={{ padding: '8px 0' }}>
-          <IconButton onClick={handleDeletePiece} sx={{ padding: '8px 8px 8px 0' }}>
+          <IconButton onClick={onRemoveClick} sx={{ padding: '8px 8px 8px 0' }}>
               <HighlightOffIcon color='error' />
           </IconButton>
           <Badge badgeContent={count} color='primary'>
               <ListItemText sx={{ marginLeft: '15px' }} primary={title} />
           </Badge>
           <ListItemButton sx={{ marginLeft: '30px', justifyContent: 'flex-end' }}>
-              <ListItemIcon onClick={handleReturnPiece} sx={{ justifyContent: 'flex-end' }}>
+              <ListItemIcon onClick={onReturnClick} sx={{ justifyContent: 'flex-end' }}>
                   <Checkbox checked={returned} />
               </ListItemIcon>
           </ListItemButton>
           <ListItemText
-              className={cnRentPieceItem('Text', { payed })}
+              className={cnRentPieceItem('Text')}
               sx={{ minWidth: '70px' }}
               slotProps={{ primary: { align: 'right' } }}
-              primary={`${price * count} ₽`}
+              primary={
+                  <Button className={cnRentPieceItem('PayBtn', { payed })} onClick={onPayClick} color='inherit' variant='text'>
+                      {`${price * count} ₽`}
+                  </Button>
+        }
       />
       </ListItem>
   );
 };
-
-const RentPieceItem = memo(RentPieceItemFC);
 
 export default RentPieceItem;

@@ -1,4 +1,4 @@
-import { BaseSyntheticEvent, FC, useCallback } from 'react';
+import { BaseSyntheticEvent, FC } from 'react';
 import { cn } from '@bem-react/classname';
 import { IconButton, Stack } from '@mui/material';
 import { CircleOutlined } from '@mui/icons-material';
@@ -51,18 +51,15 @@ const cnPiecesControl = cn('PiecesControl');
 const PiecesControl: FC<PiecesControlProps> = ({ itemId }) => {
   const dispatch = useAppDispatch();
 
-  const handleAddPiece = useCallback(
-    (e: BaseSyntheticEvent) => {
-      const { name } = e.currentTarget;
+  const handleAddPiece = (e: BaseSyntheticEvent) => {
+    const { name } = e.currentTarget;
 
-      if (!isRentType(name)) {
-        return;
-      }
+    if (!isRentType(name)) {
+      return;
+    }
 
-      dispatch(auditActions.addRentPiece({ itemId, type: name }));
-    },
-    [dispatch, itemId]
-  );
+    dispatch(auditActions.addRentPiece({ itemId, type: name }));
+  };
 
   return (
       <Stack className={cnPiecesControl()} spacing={2} direction='row'>

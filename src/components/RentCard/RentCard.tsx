@@ -1,5 +1,5 @@
 import { cn } from '@bem-react/classname';
-import { FC, useCallback, useMemo } from 'react';
+import { FC } from 'react';
 import { Button, Card, CardActions, CardContent, List, Stack, Typography } from '@mui/material';
 
 import { auditActions } from '../../lib/redux/slices/auditSlice/auditSlice.ts';
@@ -18,22 +18,13 @@ const cnRentCard = cn('RentCard');
 const RentCard: FC<RentCardProps> = ({ item, itemId, items }) => {
   const dispatch = useAppDispatch();
 
-  const handleAllReturned = useCallback(() => {
-    dispatch(auditActions.checkReturnAllRentPieces({ id: itemId }));
-  }, [dispatch, itemId]);
+  const handleAllReturned = () => dispatch(auditActions.checkReturnAllRentPieces({ id: itemId }));
+  const handleAllPayed = () => dispatch(auditActions.checkPayItem({ id: itemId }));
 
-  const handleAllPayed = useCallback(() => {
-    dispatch(auditActions.checkPayItem({ id: itemId }));
-  }, [dispatch, itemId]);
-
-  const totalPrice = useMemo(() => items.reduce((acc, item) => acc + item.price * item.count, 0), [items]);
-  const { returnBtnDisabled, payBtnDisabled } = useMemo(
-    () => ({
-      returnBtnDisabled: !item?.items.length || item?.items.every(({ returned }) => returned),
-      payBtnDisabled: item?.payed || !item?.items.length
-    }),
-    [item?.items, item?.payed]
-  );
+  const totalPrice = items.reduce((acc, item) => acc + item.price * item.count, 0);
+  const payedSum = items.reduce((acc, item) => acc + (item.payed ? item.price * item.count : 0), 0);
+  const returnBtnDisabled = !item?.items.length || item?.items.every(({ returned }) => returned);
+  const payBtnDisabled = !item?.items.length || item?.items.every(({ payed }) => payed);
 
   return (
       <Card sx={{ height: '100%', bgcolor: '#c4c4c4', marginTop: '15px' }}>
@@ -49,6 +40,14 @@ const RentCard: FC<RentCardProps> = ({ item, itemId, items }) => {
                   </Typography>
                   <Typography gutterBottom variant='h6' component='div' color='textPrimary'>
                       {`${totalPrice} ₽`}
+                  </Typography>
+              </Stack>
+              <Stack direction='row' sx={{ justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography gutterBottom variant='inherit' component='div' color='textPrimary'>
+                      Оплачено
+                  </Typography>
+                  <Typography gutterBottom variant='inherit' component='div' color='textPrimary'>
+                      {`${payedSum} ₽`}
                   </Typography>
               </Stack>
           </CardContent>

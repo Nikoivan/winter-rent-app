@@ -38,6 +38,12 @@ export enum RentTypes {
   HELMET = 'helmets',
 }
 
+export enum RentPieceActionTypes {
+  PAY = 'pay',
+  RETURN = 'return',
+  DELETE = 'delete',
+}
+
 export type ContactInfo = {
   clientName: string;
   clientPhone: string;
@@ -65,7 +71,6 @@ export type RentItem = {
   id: string;
   contactInfo: ContactInfo;
   items: RentPieceType[];
-  payed: boolean;
   comment?: string;
 };
 
@@ -77,7 +82,7 @@ export enum AuditTabs {
 export type RentItemAction = PayloadAction<{ id: string }>;
 export type RentItemAddAction = PayloadAction<{ id: string; contactInfo: ContactInfo }>;
 export type SelectTabAction = PayloadAction<{ tab: AuditTabs }>;
-export type RentPieceAction = PayloadAction<{ itemId: string; pieceId: string }>;
+export type RentPieceAction = PayloadAction<{ itemId: string; pieceId: string; actionType: RentPieceActionTypes }>;
 export type RentPieceAddAction = PayloadAction<{ itemId: string; type: RentTypes }>;
 
 export type AppAction = RentItemAction | RentItemAddAction | SelectTabAction | RentPieceAction | RentPieceAddAction;
