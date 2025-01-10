@@ -130,6 +130,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     'space-infix-ops': 2,
     'newline-before-return': 'error',
     'import/no-commonjs': 'off',
+    'import/no-import-module-exports': 'off',
 
     // REACT
     // https://github.com/yannickcr/eslint-plugin-react/tree/master/docs/rules
@@ -166,6 +167,7 @@ export default tseslint.config({ ignores: ['dist'] }, js.configs.recommended, ts
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#supported-rules
     ...tseslint.configs.recommended.rules,
     '@typescript-eslint/consistent-type-assertions': 2,
+    '@typescript-eslint/no-namespace': 'off',
     '@typescript-eslint/no-empty-interface': 2,
     '@typescript-eslint/no-unused-vars': [
       2,

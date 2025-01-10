@@ -6,9 +6,10 @@ import CalendarPage from './pages/CalendarPage.tsx';
 import App from './App';
 import IndexPage from './pages/IndexPage.tsx';
 import RentItemPage from './pages/RentItemPage.tsx';
-import Audit from './components/Audit/Audit.tsx';
+import Audit from './components/Audit/Audit.async.tsx';
 import NotFoundPage from './pages/NotFoundPage.tsx';
 import CalendarItemPage from './pages/CalendarItemPage.tsx';
+import Reports from './components/Reports/Reports.tsx';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
             Component: CalendarItemPage
           }
         ]
+      },
+      {
+        path: 'reports',
+        Component: Reports
       },
       {
         Component: NotFoundPage

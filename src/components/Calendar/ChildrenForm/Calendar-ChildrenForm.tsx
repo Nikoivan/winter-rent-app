@@ -11,7 +11,7 @@ type CalendarChildrenFormProps = {
 const cnCalendar = cn('Calendar');
 
 const CalendarChildrenForm: FC<CalendarChildrenFormProps> = ({ form, onChange }) => {
-  const [hasChildren, setChildren] = useState<boolean>(false);
+  const [hasChildren, setChildren] = useState<boolean>((!!form && Object.values(form).some(Boolean)) || false);
   const onCheckboxChange = () => setChildren(!hasChildren);
 
   return (

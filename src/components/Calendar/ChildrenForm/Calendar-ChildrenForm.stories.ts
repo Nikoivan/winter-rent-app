@@ -15,6 +15,7 @@ export default meta;
 export const MainNav: Story = {
   args: {
     onChange(e: React.ChangeEvent<HTMLInputElement>) {
+      // eslint-disable-next-line
       console.log(e.target.value);
     }
   }
